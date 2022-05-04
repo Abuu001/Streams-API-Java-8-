@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -43,6 +44,36 @@ public class Main {
                 )).collect(Collectors.toList());
 
         System.out.println( increasedSalary);
+
+
+        //filter
+        List<Employee> filterEmployee = employees.stream()
+                .filter(employee -> employee.getSalary() > 5_000)
+                .map(employee -> new Employee(
+                        employee.getFirstName(),
+                        employee.getLastName(),
+                        employee.getSalary() * BONUS_RATE,
+                        employee.getProjects())
+                ).collect(Collectors.toList());
+
+        System.out.println(filterEmployee);
+
+        //flatmap
+        String projs =employees.stream()
+                .map(employee -> employee.getProjects())
+                .flatMap(strings -> strings.stream())
+                .collect(Collectors.joining(","));
+
+        System.out.println(projs);
+
+        //shorscircuit
+       List<Employee> shortCircuit = employees
+                .stream()
+                .skip(1L)
+                .limit(1L)
+                .collect(Collectors.toList());
+
+        System.out.println(shortCircuit);
 
 
     }
