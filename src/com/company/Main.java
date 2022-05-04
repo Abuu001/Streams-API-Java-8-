@@ -1,7 +1,9 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,7 +77,19 @@ public class Main {
 
         System.out.println(shortCircuit);
 
+        //min/max
+        Employee maxSalary = employees.stream()
+                .max(Comparator.comparing(Employee::getSalary))
+                .orElseThrow(NoSuchElementException::new);
 
+        System.out.println("max salaried employee >>" + maxSalary);
+
+        //reduce
+       Double totsalary =  employees.stream()
+                .map(employee -> employee.getSalary())
+               .reduce(0.0,Double::sum) ;
+
+        System.out.println(totsalary);
     }
 
 }
